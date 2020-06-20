@@ -10,34 +10,35 @@
         http://code.alibabatech.com/schema/dubbo
         http://code.alibabatech.com/schema/dubbo/dubbo.xsd" default-autowire="byName">
 
-	<context:annotation-config/>
-	<!-- 不能单独定义org扫描 -->
-	<context:component-scan base-package="org.provider"/>
-	<!-- 当前项目在分布式系统里面的唯一名称，计算依赖关系的标签 -->
-	<dubbo:application name="order-provider" owner="wuting"></dubbo:application>
-	<!-- 监控中心需要用到 -->
-	<dubbo:monitor protocol="registry"></dubbo:monitor>
-	<!-- dubbo对外暴露服务的地址所对应的注册中心，这里面用大zookeeper来管理注册中心 -->
-	<!-- 多注册中心支持 id="zkOne" id="zkTwo" 两个不同的集群,这里不做演示-->
-	<!-- 只订阅，不注册register="false"；只注册，不订阅subscribe="false" 实际场景经常用到-->
-	<dubbo:registry protocol="zookeeper" address="192.168.10.128:2181,192.168.10.129:2181,192.168.10.130:2181,192.168.10.131:2181"></dubbo:registry>
-	<!-- <dubbo:registry id="zkTwo" protocol="zookeeper" address="192.168.10.128:2181"></dubbo:registry> -->
-	<!--当前服务发布所依赖的协议为dubbo；还有其它的服务协议：webserovice、Thrift、Hessain、http-->
-	<!-- 这里的host="192.168.1.111"可以不配置，按照底层的逻辑执行就可以了 -->
-	<dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>
-	<!-- 增加hessian协议,下面这行经过测试可以不用配置,只要在dubbo:service中配置protocol="hessian"就可以默认到hessian协议;如果需要hessian协议，又需要负载均衡，那么在配置负载均衡时需要配置下面这项，因为需要修改端口号，否则端口号相同报错 -->
-	<dubbo:protocol name="hessian" port="8090" server="jetty"/>
-	<!-- 当前服务配置的发布，需要暴露的接口 -->
-	<!-- 1.不同协议的实现 protocol="hessian" -->
-	<!-- 2.不同注册中心的实现 registry="zkOne" registry="zkTwo"多注册中心支持 -->
-	<!-- 3.不同版本号的实现version="version1"，考虑到需要兼容在服务器升级时客户端还在使用老的版本 -->
-	<!-- 4.loadbalance="random"负载均衡的配置 -->
-	<dubbo:service interface="org.api.IOrderService" ref="orderService1" version="1.0"></dubbo:service>
-	<dubbo:service interface="org.api.IOrderService" ref="orderService2" version="2.0"></dubbo:service>
-	<dubbo:service interface="org.api.IOrderQueryService" ref="orderQuerySerice" version="1.0"></dubbo:service>
-	<!-- 当前服务接口的具体实现类，这里可以有两种配置方式，一种是基于下面的xml bean的配置，另外一种是基于annotation的配置@service("orderService"),这里使用annotation的方式 -->
-	<!-- <bean id="orderService" class="org.provider.OrderServiceImpl"></bean>
-	<bean id="orderQuerySerice" class="org.provider.OrderQueryServiceImpl"></bean> -->
-	<!-- 将服务对外暴漏的接口引入 -->
-	<import resource="classpath*:META-INF/client/order-customer.xml"/>
+    <context:annotation-config/>
+    <!-- 不能单独定义org扫描 -->
+    <context:component-scan base-package="org.provider"/>
+    <!-- 当前项目在分布式系统里面的唯一名称，计算依赖关系的标签 -->
+    <dubbo:application name="order-provider" owner="wuting"></dubbo:application>
+    <!-- 监控中心需要用到 -->
+    <dubbo:monitor protocol="registry"></dubbo:monitor>
+    <!-- dubbo对外暴露服务的地址所对应的注册中心，这里面用大zookeeper来管理注册中心 -->
+    <!-- 多注册中心支持 id="zkOne" id="zkTwo" 两个不同的集群,这里不做演示-->
+    <!-- 只订阅，不注册register="false"；只注册，不订阅subscribe="false" 实际场景经常用到-->
+    <dubbo:registry protocol="zookeeper"
+                    address="192.168.10.128:2181,192.168.10.129:2181,192.168.10.130:2181,192.168.10.131:2181"></dubbo:registry>
+    <!-- <dubbo:registry id="zkTwo" protocol="zookeeper" address="192.168.10.128:2181"></dubbo:registry> -->
+    <!--当前服务发布所依赖的协议为dubbo；还有其它的服务协议：webserovice、Thrift、Hessain、http-->
+    <!-- 这里的host="192.168.1.111"可以不配置，按照底层的逻辑执行就可以了 -->
+    <dubbo:protocol name="dubbo" port="20880"></dubbo:protocol>
+    <!-- 增加hessian协议,下面这行经过测试可以不用配置,只要在dubbo:service中配置protocol="hessian"就可以默认到hessian协议;如果需要hessian协议，又需要负载均衡，那么在配置负载均衡时需要配置下面这项，因为需要修改端口号，否则端口号相同报错 -->
+    <dubbo:protocol name="hessian" port="8090" server="jetty"/>
+    <!-- 当前服务配置的发布，需要暴露的接口 -->
+    <!-- 1.不同协议的实现 protocol="hessian" -->
+    <!-- 2.不同注册中心的实现 registry="zkOne" registry="zkTwo"多注册中心支持 -->
+    <!-- 3.不同版本号的实现version="version1"，考虑到需要兼容在服务器升级时客户端还在使用老的版本 -->
+    <dubbo:service interface="org.api.IOrderService" ref="orderService1" protocol="hessian"
+                   version="1.0"></dubbo:service>
+    <dubbo:service interface="org.api.IOrderService" ref="orderService2" protocol="hessian" timeout="10"
+                   version="2.0"></dubbo:service>
+    <dubbo:service interface="org.api.IOrderQueryService" ref="orderQuerySerice" version="1.0"></dubbo:service>
+    <!-- 当前服务接口的具体实现类，这里可以有两种配置方式，一种是基于下面的xml bean的配置，另外一种是基于annotation的配置@service("orderService"),这里使用annotation的方式 -->
+    <!-- <bean id="orderService" class="org.provider.OrderServiceImpl"></bean>
+    <bean id="orderQuerySerice" class="org.provider.OrderQueryServiceImpl"></bean> -->
+
 </beans>

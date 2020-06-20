@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd"
+       default-autowire="byName">
+
+
+    <!-- scope: request session sigleton prototype-->
+    <bean name="demoController" class="com.study.demo.beanDemo.springBeanControllerDemo">
+        <!-- set注入方式-->
+        <property name="demoBean" ref="beanDemo"></property>
+        <!-- 构造器注入方式-->
+        <constructor-arg ref="beanDemo"></constructor-arg>
+        <!--<constructor-arg ref="beanDemo" index="0" type="java.lang.Object"></constructor-arg>-->
+        <property name="demoBeanFactory" ref="factoryBeanDemo"></property>
+    </bean>
+    <bean name="beanDemo" class="com.study.demo.beanDemo.DemoBean"/>
+
+    <!-- 工厂注入方式 -->
+    <bean name="factoryBeanDemo" class="com.study.demo.beanDemo.FactoryDemoBean>"/>
+
+</beans>

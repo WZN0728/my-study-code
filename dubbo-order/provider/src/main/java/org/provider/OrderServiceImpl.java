@@ -1,6 +1,7 @@
 /**
  * All rights Reserved, Designed By MyCompany
- * @Title:  OrderServiceImpl.java
+ *
+ * @Title: OrderServiceImpl.java
  * @Package org.provider
  * @Copyright: 2018 All rights reserved.
  */
@@ -22,14 +23,14 @@ import org.springframework.stereotype.Service;
 @Service("orderService1")
 public class OrderServiceImpl implements IOrderService {
 
-	public DoOrderResponse doOrder(DoOrderRequest doOrderRequest){
-		DoOrderResponse doOrderResponse = new DoOrderResponse();
-		doOrderResponse.setName(doOrderRequest.getName());
-		doOrderResponse.setCode("版本1    ->       0001");
-		doOrderResponse.setData("版本1    ->       已到货");
-		System.out.println("版本1    ->       订单已签收:" + doOrderResponse.getName() + "  ->   " + doOrderResponse.getCode() + "   ->   "
-				+ doOrderResponse.getData());
-		return doOrderResponse;
-	}
+    public DoOrderResponse doOrder(DoOrderRequest doOrderRequest) {
+        DoOrderResponse doOrderResponse = new DoOrderResponse();
+        doOrderResponse.setName(doOrderRequest.getName());
+        doOrderResponse.setCode("版本1    ->       0001");
+        doOrderResponse.setData("版本1    ->       已到货");
+        System.out.println("版本1    ->       订单已签收:" + doOrderResponse.getName() + "  ->   " + doOrderResponse.getCode() + "   ->   "
+                + doOrderResponse.getData());
+        return doOrderResponse;
+    }
 
 }

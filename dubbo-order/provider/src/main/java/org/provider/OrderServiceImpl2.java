@@ -1,6 +1,7 @@
 /**
  * All rights Reserved, Designed By MyCompany
- * @Title:  OrderServiceImpl2.java
+ *
+ * @Title: OrderServiceImpl2.java
  * @Package org.provider
  * @Copyright: 2018 All rights reserved.
  */
@@ -20,20 +21,20 @@ import org.springframework.stereotype.Service;
 @Service("orderService2")
 public class OrderServiceImpl2 implements IOrderService {
 
-	public DoOrderResponse doOrder(DoOrderRequest doOrderRequest) {
-		DoOrderResponse doOrderResponse = null;
-		try {
-			Thread.sleep(5000);
-			doOrderResponse = new DoOrderResponse();
-			doOrderResponse.setName(doOrderRequest.getName());
-			doOrderResponse.setCode("版本2    ->       0001");
-			doOrderResponse.setData("版本2    ->       已到货");
-			System.out.println("版本2    ->       订单已签收:" + doOrderResponse.getName() + "  ->   "
-					+ doOrderResponse.getCode() + "   ->   " + doOrderResponse.getData());
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-		return doOrderResponse;
-	}
+    public DoOrderResponse doOrder(DoOrderRequest doOrderRequest) {
+        DoOrderResponse doOrderResponse = null;
+        try {
+            Thread.sleep(5000);
+            doOrderResponse = new DoOrderResponse();
+            doOrderResponse.setName(doOrderRequest.getName());
+            doOrderResponse.setCode("版本2    ->       0001");
+            doOrderResponse.setData("版本2    ->       已到货");
+            System.out.println("版本2    ->       订单已签收:" + doOrderResponse.getName() + "  ->   "
+                    + doOrderResponse.getCode() + "   ->   " + doOrderResponse.getData());
+        } catch (Exception e) {
+            // TODO: handle exception
+        }
+        return doOrderResponse;
+    }
 
 }
