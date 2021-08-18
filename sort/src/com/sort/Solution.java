@@ -52,7 +52,7 @@ public class Solution {
             public int compare(Map.Entry<String, Integer> o1,
                                Map.Entry<String, Integer> o2) {
                 // TODO Auto-generated method stub
-                return o1.getValue() - o2.getValue();
+                return o2.getValue() - o1.getValue();
             }
         };
         // map转换成list进行排序
@@ -60,7 +60,7 @@ public class Solution {
         // 排序
         Collections.sort(list, valueComparator);
         // 默认情况下，TreeMap对key进行升序排序
-        System.out.println("------------map按照value升序排序--------------------");
+        System.out.println("------------map按照value降序排序--------------------");
         for (Map.Entry<String, Integer> entry : list) {
             System.out.println(entry.getKey() + ":" + entry.getValue());
         }
