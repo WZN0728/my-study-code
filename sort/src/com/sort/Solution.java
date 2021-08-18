@@ -1,7 +1,6 @@
 package com.sort;
 
-import java.util.Arrays;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author wuting
@@ -31,6 +30,40 @@ public class Solution {
         System.out.println(getStrPatch(str, str2));
         System.out.println(Arrays.toString(arr));
         System.out.println(randomString(2));
+        sortStrByMap("face is fade is face bad back");
+    }
+
+    private static void sortStrByMap(String s) {
+        if (s == null || s.length() == 0) {
+            return;
+        }
+        String[] str = s.split(" ");
+        Map<String, Integer> map = new HashMap<>();
+        for (String value : str) {
+            if (map.containsKey(value)) {
+                map.put(value, map.get(value) + 1);
+            } else {
+                map.put(value, 1);
+            }
+        }
+        // 升序比较器
+        Comparator<Map.Entry<String, Integer>> valueComparator = new Comparator<Map.Entry<String, Integer>>() {
+            @Override
+            public int compare(Map.Entry<String, Integer> o1,
+                               Map.Entry<String, Integer> o2) {
+                // TODO Auto-generated method stub
+                return o1.getValue() - o2.getValue();
+            }
+        };
+        // map转换成list进行排序
+        List<Map.Entry<String, Integer>> list = new ArrayList<Map.Entry<String, Integer>>(map.entrySet());
+        // 排序
+        Collections.sort(list, valueComparator);
+        // 默认情况下，TreeMap对key进行升序排序
+        System.out.println("------------map按照value升序排序--------------------");
+        for (Map.Entry<String, Integer> entry : list) {
+            System.out.println(entry.getKey() + ":" + entry.getValue());
+        }
     }
 
     private static int getStrPatch(String str, String str2) {

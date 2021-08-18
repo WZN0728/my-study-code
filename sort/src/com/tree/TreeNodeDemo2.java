@@ -1,4 +1,4 @@
-package com.example.sort.demo.tree;
+package com.tree;
 
 import java.util.*;
 
