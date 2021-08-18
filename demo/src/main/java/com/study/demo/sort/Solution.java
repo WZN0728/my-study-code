@@ -18,7 +18,9 @@ public class Solution {
         //选择排序
         //selectSort(arr);
         //快速排序
-        quickSort(arr, 0, arr.length - 1);
+        //quickSort(arr, 0, arr.length - 1);
+        //归并排序
+        mergeSort(0, arr.length - 1, arr);
         //爬楼梯、跳格子问题,一次走一阶或者一次两阶,一次跳一格或者一次跳两格
         //System.out.println(getClimbValue(10));
         //1、1、2、3、5、8、13 ... n
@@ -115,6 +117,48 @@ public class Solution {
             b = c;
         }
         return c;
+    }
+
+    /**
+     * jdk的Arrays.sort()方法之所以叫加强归并排序
+     * 是因为底层在判断整个数组的长度小于7的时候直接使用Java的Comparator方式排序
+     * 究其原因可能是jdk通过大量的运算得出过长度小于7时归并算法并不是最理想得
+     *
+     * @param start
+     * @param end
+     * @param arr
+     */
+    private static void mergeSort(int start, int end, int[] arr) {
+        if (start > end) {
+            return;
+        }
+        int mid = start + (end - start) / 2;
+        mergeSort(start, mid, arr);
+        mergeSort(mid + 1, end, arr);
+        mergeSortFun(start, mid, end, arr);
+    }
+
+    private static void mergeSortFun(int start, int mid, int end, int[] arr) {
+        int p0 = start;
+        int p1 = mid + 1;
+        int[] tempArray = new int[end + 1];
+        int p = 0;
+        while (p0 <= mid && mid <= end) {
+            if (arr[p0] < arr[p1]) {
+                arr[p++] = arr[p0++];
+            } else {
+                arr[p++] = arr[p1++];
+            }
+        }
+        while (p0 <= mid) {
+            arr[p++] = arr[p0++];
+        }
+        while (p1 <= end) {
+            arr[p++] = arr[p1++];
+        }
+        for (int i = 0; i < tempArray.length; i++) {
+            arr[i + start] = tempArray[i];
+        }
     }
 
     private static void quickSort(int[] arr, int startIndex, int endIndex) {
