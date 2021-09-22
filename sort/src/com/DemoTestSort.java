@@ -15,7 +15,7 @@ public class DemoTestSort {
         System.out.println(s.charAt(1));
         int[] sums = {-3, -2, -1, 0, 0, 1, 2, 3};
         System.out.println(fourSum(sums, 0));
-        com.example.sort.demo.DemoTestSort test = new com.example.sort.demo.DemoTestSort();
+        DemoTestSort test = new DemoTestSort();
         test.listNodeFun();
         generateParenthesis(3);
         System.out.println(reverse(103));
